@@ -5,18 +5,20 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "produtos")
-@Getter
-@Setter
+@Data
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Produto {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "id")
@@ -25,6 +27,9 @@ public class Produto {
 
     @Column(name = "nome",nullable = false,length = 100)
     private String nome;
+
+    @Column(name = "preco",nullable = false,precision = 18,scale = 2)
+    private BigDecimal preco;
 
     @Column(name = "descricao",length = 300)
     private String descricao;
