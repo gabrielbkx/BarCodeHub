@@ -5,14 +5,13 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "produtos")
+@Table(name = "produto")
 @Data
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
@@ -34,15 +33,11 @@ public class Produto {
     @Column(name = "descricao",length = 300)
     private String descricao;
 
-    @Column(name = "codigo-interno",nullable = false,length = 15)
+    @Column(name = "codigo_interno",nullable = false,length = 15)
     private String codigoInterno;
 
-    @Column(name = "referencia",nullable = true,length = 10)
+    @Column(name = "referencia",length = 10)
     private String referencia;
-
-    private List<Fornecedor> fornecedores;
-
-    private List<CodigoDeBarra> codigosDeBarras;
 
     @CreatedDate
     @Column(name = "data_cadastro")
@@ -51,4 +46,17 @@ public class Produto {
     @LastModifiedDate
     @Column(name = "data_atualizacao")
     private LocalDateTime data_atualizacao;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "produto_fornecedor",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "fornecedor_id")
+    )
+    private List<Fornecedor> fornecedores;
+
+    @OneToMany(mappedBy = "produto")
+    private List<CodigoDeBarra> codigosDeBarras;
+
 }

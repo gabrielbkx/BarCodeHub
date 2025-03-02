@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.EnableMBeanExport;
 
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ public class CodigoDeBarra {
     @Column(name = "codigo", nullable = false,length = 13)
     private String codigo;
 
-    @Column(name = )
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 }

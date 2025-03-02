@@ -1,22 +1,21 @@
 package com.gabrielbkx.BarCodeHub.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
+@Entity
+@Table(name = "produto_fornecedor")
 public class ProdutoFornecedor {
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
 }

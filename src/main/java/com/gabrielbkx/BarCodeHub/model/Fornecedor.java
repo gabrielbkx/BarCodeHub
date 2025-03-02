@@ -23,14 +23,22 @@ public class Fornecedor {
     @Column(name = "nome", nullable = false,length = 50)
     private String nome;
 
-    @Column(name = "cnpj", nullable = false,length = 15)
+    @Column(name = "cnpj", nullable = false,length = 25)
     private String cnpj;
 
     @Column(name = "telefone")
     private String telefone;
 
-    @Column(name = "endereco")
+    @OneToOne
+    @JoinColumn(name = "endereco_id") // chave estrangeira que referencia a tabela Endereco
     private Endereco endereco;
 
+    @ManyToMany
+    @JoinTable(
+            name = "produto_fornecedor",
+            joinColumns = @JoinColumn(name = "fornecedor_id"),
+            inverseJoinColumns = @JoinColumn(name = "produto_id")
+    )
     private List<Produto> produtos;
+
 }
