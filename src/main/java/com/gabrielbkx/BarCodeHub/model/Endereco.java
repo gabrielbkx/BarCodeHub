@@ -9,7 +9,6 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Endereco {
     private static final long serialVersionUID = 1L;
 
@@ -17,8 +16,15 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+
+    @Column(name = "cep",nullable = false,length = 20)
+    private String cep;
+
     @Column(name = "logradouro",nullable = false,length = 100)
     private String logradouro;
+
+    @Column(name = "complemento",length = 50)
+    private String complemento;
 
     @Column(name = "bairro",nullable = false,length = 30)
     private String bairro;
@@ -29,8 +35,8 @@ public class Endereco {
     @Column(name = "uf",nullable = false,length = 10)
     private String uf;
 
-    @Column(name = "cep",nullable = false,length = 20)
-    private String cep;
+    @Column(name = "estado",length = 50)
+    private String estado;
 
     @OneToOne(mappedBy = "endereco") // Relacionamento bidirecional
     private Fornecedor fornecedor;

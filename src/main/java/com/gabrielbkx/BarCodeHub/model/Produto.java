@@ -15,7 +15,6 @@ import java.util.UUID;
 @Data
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Produto {
     private static final long serialVersionUID = 1L;
 

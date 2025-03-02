@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +11,6 @@ import java.util.UUID;
 @Table(name = "fornecedor")
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Fornecedor {
     private static final long serialVersionUID = 1L;
 

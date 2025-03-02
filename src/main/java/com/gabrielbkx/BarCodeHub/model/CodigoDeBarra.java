@@ -4,15 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.EnableMBeanExport;
-
 import java.util.UUID;
 
 @Entity
 @Table(name = "codigo_de_barras")
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class CodigoDeBarra {
     private static final long serialVersionUID = 1L;
 
