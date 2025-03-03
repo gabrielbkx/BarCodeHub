@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,16 +47,18 @@ public class Produto {
     @Column(name = "data_atualizacao")
     private LocalDateTime data_atualizacao;
 
-
     @ManyToMany
     @JoinTable(
             name = "produto_fornecedor",
             joinColumns = @JoinColumn(name = "produto_id"),
             inverseJoinColumns = @JoinColumn(name = "fornecedor_id")
     )
-    private List<Fornecedor> fornecedores;
+    private List<Fornecedor> fornecedores = new ArrayList<>();
 
     @OneToMany(mappedBy = "produto")
-    private List<CodigoDeBarra> codigosDeBarras;
+    private List<CodigoDeBarra> codigosDeBarras = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 }
