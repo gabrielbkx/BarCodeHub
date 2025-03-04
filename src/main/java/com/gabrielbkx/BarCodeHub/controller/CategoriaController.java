@@ -20,10 +20,10 @@ public class CategoriaController {
     private final CategoriaService categoriaService;
 
     @PostMapping
-    public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> criarCategoria(@RequestBody String nome) {
         try {
 
-            Categoria categoriaSalva = categoriaService.criarCategoria(categoria);
+            Categoria categoriaSalva = categoriaService.criarCategoria(nome);
 
             URI location = ServletUriComponentsBuilder.
                     fromCurrentRequest().path("/{id}").buildAndExpand(categoriaSalva.getId()).toUri();
