@@ -1,6 +1,5 @@
 package com.gabrielbkx.BarCodeHub.services;
 
-import com.gabrielbkx.BarCodeHub.exceptions.RegistroDuplicadoExeption;
 import com.gabrielbkx.BarCodeHub.exceptions.RegistroNaoEncontradoException;
 import com.gabrielbkx.BarCodeHub.model.Categoria;
 import com.gabrielbkx.BarCodeHub.repository.CategoriaRepository;
@@ -21,18 +20,16 @@ public class CategoriaService {
 
     //Salva uma nova categoria nobanco de dados
     public Categoria criarCategoria(String nome) {
+        String nomeUpperCase = nome.toUpperCase(); // Respeita a regra de negocio do nome ser salvo em maiuscula
 
-        // Aqui salvamos a categoria no banco de dados apenas em maiuscula
-        String nomeUpperCase = nome.toUpperCase();
-
-        if (validador.existeCategoriaCadastrada(nomeUpperCase)) {
-            throw new RegistroDuplicadoExeption("Já existe uma categoria com esse nome.");
-        }
+        // Valida a existência antes de prosseguir
+        validador.validar(nomeUpperCase);
 
         Categoria categoria = new Categoria();
         categoria.setNome(nomeUpperCase);
-        return repository.save(categoria);   // Salva a categoria e retorna o objeto
+        return repository.save(categoria);
     }
+
 
     //Retorna uma lista de todas as categorias que existem no banco de dados
     public List<Categoria> listarCategorias() {

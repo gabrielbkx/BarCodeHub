@@ -59,6 +59,6 @@ public class Produto {
     private List<CodigoDeBarra> codigosDeBarras = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @JoinColumn(name = "categoria_id",nullable = true)
     private Categoria categoria;
 }

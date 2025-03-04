@@ -20,9 +20,13 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "nome",nullable = false,length = 50)
+    @Column(name = "nome",nullable = false,length = 50,unique = true)
     private String nome;
 
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria",cascade = CascadeType.ALL,orphanRemoval = false)
     private List<Produto> produtos = new ArrayList<Produto>();
+
+    public void setNome(String nome) {
+        this.nome = nome.toUpperCase(); // Converte para uppercase antes de salvar
+    }
 }

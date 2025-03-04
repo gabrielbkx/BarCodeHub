@@ -1,5 +1,6 @@
 package com.gabrielbkx.BarCodeHub.controller;
 
+import com.gabrielbkx.BarCodeHub.dto.CategoriaDto;
 import com.gabrielbkx.BarCodeHub.exceptions.RegistroDuplicadoExeption;
 import com.gabrielbkx.BarCodeHub.model.Categoria;
 import com.gabrielbkx.BarCodeHub.services.CategoriaService;
@@ -20,22 +21,25 @@ public class CategoriaController {
     private final CategoriaService categoriaService;
 
     @PostMapping
-    public ResponseEntity<Categoria> criarCategoria(@RequestBody String nome) {
+    public ResponseEntity<Object> criarCategoria(@RequestBody CategoriaDto categoriaDto) {
         try {
+            // Obter o nome do DTO
+            String nome = categoriaDto.nome();
 
             Categoria categoriaSalva = categoriaService.criarCategoria(nome);
 
-            URI location = ServletUriComponentsBuilder.
-                    fromCurrentRequest().path("/{id}").buildAndExpand(categoriaSalva.getId()).toUri();
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(categoriaSalva.getId()).toUri();
 
             return ResponseEntity.created(location).build();
 
-        }catch (RegistroDuplicadoExeption e){
-
+        } catch (RegistroDuplicadoExeption e) {
             var conflito = HttpStatus.CONFLICT.value();
-            return ResponseEntity.status(conflito).build();
+            return ResponseEntity.status(conflito).body(e.getMessage());
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Categoria> excluirCategoria(@PathVariable("id") UUID id) {
