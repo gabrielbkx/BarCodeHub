@@ -1,5 +1,6 @@
 package com.gabrielbkx.BarCodeHub.services;
 
+import com.gabrielbkx.BarCodeHub.dto.CategoriaDto;
 import com.gabrielbkx.BarCodeHub.exceptions.RegistroNaoEncontradoException;
 import com.gabrielbkx.BarCodeHub.model.Categoria;
 import com.gabrielbkx.BarCodeHub.repository.CategoriaRepository;
@@ -42,29 +43,11 @@ public class CategoriaService {
     }
 
     // Deleta uma categoria pelo id dela usando um Optional
-    @Transactional // Notação que da commits e rollbacks automaticos no banco de dados
     public void deletarCategoriaPorId(UUID id){
         var categoriaParaDeletar = repository.findById(id).orElseThrow( // Caso op id nao exista nos retorna uma exceção
                 () -> new RegistroNaoEncontradoException("Categoria não encontrada"));
         repository.deleteById(categoriaParaDeletar.getId());
     }
 
-    @Transactional // Notação que da commits e rollbacks automaticos no banco de dados
-    public void atualizar(String nome) {
-
-        String nomeUpperCase = nome.toUpperCase();
-
-        Categoria categoria = new Categoria();
-        categoria.setNome(nomeUpperCase);
-
-        // Caso o id da categoria nao exista, lança uma exceção
-        if (categoria.getId() == null){
-
-            throw new IllegalArgumentException("Para atualizar, é necessário" +
-                    " que o autor ja esteja salvo na base de dados");
-        }
-
-        repository.save(categoria);
-    }
 
 }

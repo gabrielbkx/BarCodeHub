@@ -23,5 +23,4 @@ public class CategoriaValidator {
         String nomeUpperCase = nome.toUpperCase();
         return repository.existsByNome(nomeUpperCase);
     }
-
 }

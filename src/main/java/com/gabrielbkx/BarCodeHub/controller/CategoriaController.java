@@ -7,10 +7,12 @@ import com.gabrielbkx.BarCodeHub.services.CategoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -22,30 +24,23 @@ public class CategoriaController {
 
     @PostMapping
     public ResponseEntity<Object> criarCategoria(@RequestBody CategoriaDto categoriaDto) {
-        try {
-            // Obter o nome do DTO
+
             String nome = categoriaDto.nome();
-
             Categoria categoriaSalva = categoriaService.criarCategoria(nome);
-
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{id}")
                     .buildAndExpand(categoriaSalva.getId()).toUri();
-
             return ResponseEntity.created(location).build();
-
-        } catch (RegistroDuplicadoExeption e) {
-            var conflito = HttpStatus.CONFLICT.value();
-            return ResponseEntity.status(conflito).body(e.getMessage());
-        }
     }
 
 
     @DeleteMapping("/{id}")
+    @Transactional // Notação que da commits e rollbacks automaticos no banco de dados
     public ResponseEntity<Categoria> excluirCategoria(@PathVariable("id") UUID id) {
         categoriaService.deletarCategoriaPorId(id);
         return ResponseEntity.noContent().build();
     }
+
 
     @GetMapping
     public ResponseEntity<List<Categoria>> listarCategorias() {
