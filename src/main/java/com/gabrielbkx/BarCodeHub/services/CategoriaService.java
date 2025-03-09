@@ -42,14 +42,16 @@ public class CategoriaService {
 
     // Deleta uma categoria pelo id dela usando um Optional
     public void deletarCategoriaPorId(UUID id){
-        var categoriaParaDeletar = repository.findById(id).orElseThrow( // Caso op id nao exista nos retorna uma exceção
+
+        var categoriaParaDeletar = repository.findById(id).orElseThrow(
                 () -> new RegistroNaoEncontradoException("Categoria não encontrada"));
+
         repository.deleteById(categoriaParaDeletar.getId());
     }
 
-    public void atualizar(UUID id,String nome){
-        Categoria categoriaQueExiste = repository.findById(id).
-                orElseThrow(() -> new RegistroNaoEncontradoException("Essa categoria não existe"));
+    public void atualizar(UUID id, String nome) throws RegistroNaoEncontradoException {
+        Categoria categoriaQueExiste = buscarPorId(id);
+        validador.validar(nome);
         categoriaQueExiste.setNome(nome);
         repository.save(categoriaQueExiste);
     }
