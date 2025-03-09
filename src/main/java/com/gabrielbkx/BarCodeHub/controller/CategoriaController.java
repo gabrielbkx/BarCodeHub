@@ -54,5 +54,12 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaService.buscarPorId(id));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Categoria> atualizarCategoria( @PathVariable("id") String id,
+                                                         @RequestBody CategoriaDto categoriaDto) {
+        UUID idCategoria = UUID.fromString(id);
+        categoriaService.atualizar(idCategoria,categoriaDto.nome());
+        return ResponseEntity.noContent().build();
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.gabrielbkx.BarCodeHub.services;
 
-import com.gabrielbkx.BarCodeHub.dto.CategoriaDto;
 import com.gabrielbkx.BarCodeHub.exceptions.RegistroNaoEncontradoException;
 import com.gabrielbkx.BarCodeHub.model.Categoria;
 import com.gabrielbkx.BarCodeHub.repository.CategoriaRepository;
@@ -31,7 +30,6 @@ public class CategoriaService {
         return repository.save(categoria);
     }
 
-
     //Retorna uma lista de todas as categorias que existem no banco de dados
     public List<Categoria> listarCategorias() {
         return repository.findAll();
@@ -49,5 +47,10 @@ public class CategoriaService {
         repository.deleteById(categoriaParaDeletar.getId());
     }
 
-
+    public void atualizar(UUID id,String nome){
+        Categoria categoriaQueExiste = repository.findById(id).
+                orElseThrow(() -> new RegistroNaoEncontradoException("Essa categoria não existe"));
+        categoriaQueExiste.setNome(nome);
+        repository.save(categoriaQueExiste);
+    }
 }
