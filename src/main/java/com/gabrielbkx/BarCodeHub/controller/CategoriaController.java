@@ -55,7 +55,7 @@ public class CategoriaController {
     public ResponseEntity<Categoria> atualizarCategoria(@PathVariable UUID id,
                                                         @RequestBody CategoriaDto categoriaDto) {
         categoriaService.atualizar(id, categoriaDto.nome());
-        return ResponseEntity.noContent().build(); // Ou use ResponseEntity.ok() se quiser retornar a categoria
+        return ResponseEntity.ok().build();
     }
 
 }

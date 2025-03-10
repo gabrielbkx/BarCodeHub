@@ -49,7 +49,7 @@ public class CategoriaService {
         repository.deleteById(categoriaParaDeletar.getId());
     }
 
-    public void atualizar(UUID id, String nome) throws RegistroNaoEncontradoException {
+    public void atualizar(UUID id, String nome) {
         Categoria categoriaQueExiste = buscarPorId(id);
         validador.validar(nome);
         categoriaQueExiste.setNome(nome);
