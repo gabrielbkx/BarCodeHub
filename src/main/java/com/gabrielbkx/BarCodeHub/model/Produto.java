@@ -27,6 +27,9 @@ public class Produto {
     @Column(name = "nome",nullable = false,length = 100)
     private String nome;
 
+    @Column(name = "quantidade")
+    private Integer quantidade;
+
     @Column(name = "preco",nullable = false,precision = 18,scale = 2)
     private BigDecimal preco;
 

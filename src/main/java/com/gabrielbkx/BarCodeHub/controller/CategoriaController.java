@@ -1,18 +1,15 @@
 package com.gabrielbkx.BarCodeHub.controller;
 
 import com.gabrielbkx.BarCodeHub.dto.CategoriaDto;
-import com.gabrielbkx.BarCodeHub.exceptions.RegistroDuplicadoExeption;
 import com.gabrielbkx.BarCodeHub.model.Categoria;
 import com.gabrielbkx.BarCodeHub.services.CategoriaService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
