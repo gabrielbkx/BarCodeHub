@@ -7,6 +7,7 @@ import com.gabrielbkx.BarCodeHub.repository.FornecedorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,6 +36,12 @@ public class FornecedorService {
     public Fornecedor buscar(UUID id) {
         return repository.findById(id).orElseThrow(
                 () -> new RegistroNaoEncontradoException(id.toString()));
+    }
+
+    public Fornecedor buscarPeloNome(String nome) {
+            return repository.findByNome(nome).orElseThrow(
+                    ( () -> new RegistroNaoEncontradoException("Fornecedor nao encontrado"))
+            );
     }
 
 
