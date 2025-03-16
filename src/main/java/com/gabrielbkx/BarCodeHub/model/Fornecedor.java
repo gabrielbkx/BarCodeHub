@@ -31,4 +31,7 @@ public class Fornecedor {
     )
     private List<Produto> produtos;
 
+    @OneToMany(mappedBy = "fornecedor")
+    private List<CodigoDeBarra> codigoDeBarras;
+
 }

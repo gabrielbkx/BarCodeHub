@@ -3,20 +3,23 @@ package com.gabrielbkx.BarCodeHub.services;
 import com.gabrielbkx.BarCodeHub.exceptions.RegistroDuplicadoExeption;
 import com.gabrielbkx.BarCodeHub.exceptions.RegistroNaoEncontradoException;
 import com.gabrielbkx.BarCodeHub.model.Fornecedor;
-import com.gabrielbkx.BarCodeHub.repository.FornecedorRepository;
-import lombok.RequiredArgsConstructor;
+import com.gabrielbkx.BarCodeHub.model.Produto;
+import com.gabrielbkx.BarCodeHub.repository.ProdutoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
-public class FornecedorService {
+@AllArgsConstructor
+public class ProdutoService {
 
-    private final FornecedorRepository repository;
+    private final ProdutoRepository repository;
 
 
-    public Fornecedor cadastrar(String nome,String cnpj) {
+
+    public Produto cadastrar(String nome, String cnpj) {
 
         // Não permite registra um fornecedor cujo nome ja existe no banco de dados
         repository.existsByNome(nome.toUpperCase()).orElseThrow( () -> new
@@ -25,7 +28,7 @@ public class FornecedorService {
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setNome(nome.toUpperCase());
         fornecedor.setCnpj(cnpj);
-       return repository.save(fornecedor);
+        return repository.save(fornecedor);
     }
 
     public List<Fornecedor> listar() {

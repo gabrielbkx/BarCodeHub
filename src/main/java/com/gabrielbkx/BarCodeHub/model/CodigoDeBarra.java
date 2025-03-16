@@ -22,4 +22,9 @@ public class CodigoDeBarra {
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
+
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id",nullable = false)
+    private Fornecedor fornecedor;
+
 }
