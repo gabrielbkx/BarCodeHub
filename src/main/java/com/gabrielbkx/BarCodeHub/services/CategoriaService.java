@@ -2,6 +2,7 @@ package com.gabrielbkx.BarCodeHub.services;
 
 import com.gabrielbkx.BarCodeHub.exceptions.RegistroNaoEncontradoException;
 import com.gabrielbkx.BarCodeHub.model.Categoria;
+import com.gabrielbkx.BarCodeHub.model.Fornecedor;
 import com.gabrielbkx.BarCodeHub.repository.CategoriaRepository;
 import com.gabrielbkx.BarCodeHub.validator.CategoriaValidator;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,12 @@ public class CategoriaService {
     public Categoria buscarPorId(UUID id) {
         return repository.findById(id).orElseThrow(
                 () -> new RegistroNaoEncontradoException(id.toString()));
+    }
+
+    public Categoria buscarPeloNome(String nome) {
+        return repository.findByNome(nome).orElseThrow(
+                ( () -> new RegistroNaoEncontradoException("Categoria nao encontrada"))
+        );
     }
 
     // Deleta uma categoria pelo id dela usando um Optional

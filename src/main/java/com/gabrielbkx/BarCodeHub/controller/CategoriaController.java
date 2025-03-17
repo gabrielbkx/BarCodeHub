@@ -22,8 +22,7 @@ public class CategoriaController {
     @PostMapping
     public ResponseEntity<Object> criarCategoria(@RequestBody CategoriaDto categoriaDto) {
 
-            String nome = categoriaDto.nome();
-            Categoria categoriaSalva = categoriaService.criarCategoria(nome);
+            Categoria categoriaSalva = categoriaService.criarCategoria(categoriaDto.nome());
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{id}")
                     .buildAndExpand(categoriaSalva.getId()).toUri();

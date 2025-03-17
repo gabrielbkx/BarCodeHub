@@ -1,7 +1,6 @@
 package com.gabrielbkx.BarCodeHub.services;
 
 import com.gabrielbkx.BarCodeHub.exceptions.RegistroNaoEncontradoException;
-import com.gabrielbkx.BarCodeHub.model.Categoria;
 import com.gabrielbkx.BarCodeHub.model.Fornecedor;
 import com.gabrielbkx.BarCodeHub.model.Produto;
 import com.gabrielbkx.BarCodeHub.repository.ProdutoRepository;
@@ -17,7 +16,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProdutoService {
 
-    private FornecedorService fornecedorService;
+    private final FornecedorService fornecedorService;
+    private final CategoriaService categoriaService;
     private final ProdutoValidator validator;
     private final ProdutoRepository repository;
 
@@ -25,22 +25,21 @@ public class ProdutoService {
     public Produto criarProduto(String nome, Integer quantidade,
                                 BigDecimal preco, String descricao,
                                 String codigoInterno,
-                                String referencia, Fornecedor fornecedor,
-                                Categoria categoria)
+                                String referencia, UUID fornecedor,
+                                UUID categoria)
     {
-        String nomeUpperCase = nome.toUpperCase();
 
         validator.validar(codigoInterno); // Valida a existência do produto pelo codigo interno antes de prosseguir
 
         Produto produto = new Produto();
-        produto.setNome(nomeUpperCase);
+        produto.setNome(nome);
         produto.setQuantidade(quantidade);
         produto.setPreco(preco);
         produto.setDescricao(descricao);
         produto.setCodigoInterno(codigoInterno);
         produto.setReferencia(referencia);
-        produto.getFornecedores().add(fornecedorService.buscarPeloNome(fornecedor.getNome()));
-        produto.setCategoria(categoria);
+        produto.getFornecedores().add(fornecedorService.buscar(fornecedor));
+        produto.setCategoria(categoriaService.buscarPorId(categoria));
         return repository.save(produto);
     }
 
@@ -49,10 +48,11 @@ public class ProdutoService {
                           BigDecimal preco, String descricao,
                           String codigoInterno,
                           String referencia, Fornecedor fornecedor,
-                          Categoria categoria) {
+                          String categoria) {
 
         Produto produtoQueExiste = buscarPorId(id);
         validator.validar(codigoInterno);
+
         produtoQueExiste.setNome(nome);
         produtoQueExiste.setQuantidade(quantidade);
         produtoQueExiste.setPreco(preco);
@@ -60,7 +60,7 @@ public class ProdutoService {
         produtoQueExiste.setCodigoInterno(codigoInterno);
         produtoQueExiste.setReferencia(referencia);
         produtoQueExiste.getFornecedores().add(fornecedor);
-        produtoQueExiste.setCategoria(categoria);
+        produtoQueExiste.setCategoria(categoriaService.buscarPeloNome(categoria));
         repository.save(produtoQueExiste);;
     }
 
