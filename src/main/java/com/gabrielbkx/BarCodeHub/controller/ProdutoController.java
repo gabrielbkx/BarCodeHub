@@ -5,13 +5,14 @@ import com.gabrielbkx.BarCodeHub.dto.ProdutoDTO;
 import com.gabrielbkx.BarCodeHub.model.Produto;
 import com.gabrielbkx.BarCodeHub.services.ProdutoService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-
+@Slf4j
 @RestController
 @RequestMapping("produtos")
 @AllArgsConstructor
@@ -22,6 +23,7 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity<Produto> salvarProduto(@RequestBody ProdutoDTO dto) {
 
+        log.info("Recebendo produto pelo dto: {}", dto);
         Produto produtoSalvo = produtoService.criarProduto(dto.nome().toUpperCase(), dto.quantidade(), dto.preco(), dto.descricao(),
                 dto.codigoInterno(), dto.referencia(), dto.fornecedor(), dto.categoria());
 

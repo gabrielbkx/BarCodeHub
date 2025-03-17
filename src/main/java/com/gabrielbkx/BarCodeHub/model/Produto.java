@@ -43,22 +43,22 @@ public class Produto {
     private String referencia;
 
     @CreatedDate
-    @Column(name = "data_cadastro")
+    @Column(name = "data_cadastro", nullable = false, updatable = false)
     private LocalDateTime data_cadastro;
 
     @LastModifiedDate
-    @Column(name = "data_atualizacao")
+    @Column(name = "data_atualizacao", nullable = false)
     private LocalDateTime data_atualizacao;
 
     @ManyToMany
     @JoinTable(
             name = "produto_fornecedor",
             joinColumns = @JoinColumn(name = "produto_id"),
-            inverseJoinColumns = @JoinColumn(name = "fornecedor_id",nullable = true)
+            inverseJoinColumns = @JoinColumn(name = "fornecedor_id")
     )
     private List<Fornecedor> fornecedores = new ArrayList<>();
 
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CodigoDeBarra> codigosDeBarras = new ArrayList<>();
 
     @ManyToOne

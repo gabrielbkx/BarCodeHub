@@ -3,6 +3,8 @@ package com.gabrielbkx.BarCodeHub.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,9 +31,9 @@ public class Fornecedor {
             joinColumns = @JoinColumn(name = "fornecedor_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
-    private List<Produto> produtos;
+    private List<Produto> produtos = new ArrayList<>();
 
     @OneToMany(mappedBy = "fornecedor")
-    private List<CodigoDeBarra> codigoDeBarras;
+    private List<CodigoDeBarra> codigoDeBarras = new ArrayList<>();
 
 }

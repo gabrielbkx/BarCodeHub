@@ -6,12 +6,13 @@ import com.gabrielbkx.BarCodeHub.model.Produto;
 import com.gabrielbkx.BarCodeHub.repository.ProdutoRepository;
 import com.gabrielbkx.BarCodeHub.validator.ProdutoValidator;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class ProdutoService {
@@ -29,8 +30,10 @@ public class ProdutoService {
                                 UUID categoria)
     {
 
+        log.info("Validando produto pelo seu codigo");
         validator.validar(codigoInterno); // Valida a existência do produto pelo codigo interno antes de prosseguir
 
+        log.info("Criando novo produto usando o padrão DTO");
         Produto produto = new Produto();
         produto.setNome(nome);
         produto.setQuantidade(quantidade);
@@ -40,6 +43,8 @@ public class ProdutoService {
         produto.setReferencia(referencia);
         produto.getFornecedores().add(fornecedorService.buscar(fornecedor));
         produto.setCategoria(categoriaService.buscarPorId(categoria));
+
+        log.info("Salvando produto usando repository");
         return repository.save(produto);
     }
 
@@ -47,8 +52,8 @@ public class ProdutoService {
     public void atualizar(UUID id, String nome, Integer quantidade,
                           BigDecimal preco, String descricao,
                           String codigoInterno,
-                          String referencia, Fornecedor fornecedor,
-                          String categoria) {
+                          String referencia, UUID fornecedor,
+                          UUID categoria) {
 
         Produto produtoQueExiste = buscarPorId(id);
         validator.validar(codigoInterno);
@@ -59,8 +64,8 @@ public class ProdutoService {
         produtoQueExiste.setDescricao(descricao);
         produtoQueExiste.setCodigoInterno(codigoInterno);
         produtoQueExiste.setReferencia(referencia);
-        produtoQueExiste.getFornecedores().add(fornecedor);
-        produtoQueExiste.setCategoria(categoriaService.buscarPeloNome(categoria));
+        produtoQueExiste.getFornecedores().add(fornecedorService.buscar(fornecedor));
+        produtoQueExiste.setCategoria(categoriaService.buscarPorId(categoria));
         repository.save(produtoQueExiste);;
     }
 
